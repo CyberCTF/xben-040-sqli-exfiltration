@@ -38,3 +38,10 @@ ARG FLAG=FLAG{bf637e1a20d2f793ce59e38029da94c08a83528042ecf70a29cf230fb5413178}
 RUN sed -i s/@FLAG@/$FLAG/g /var/www/html/admin.php
 
 ENTRYPOINT ["/app/entrypoint.sh"]
+
+# CyberCTF per-player flag: the flag above is only the development fallback. ctf-entrypoint.sh
+# puts the player's flag (CTF_FLAG_MAIN) in its place at every start, then runs the original
+# entrypoint and command, repeated here unchanged.
+COPY ctf-entrypoint.sh /usr/local/bin/ctf-entrypoint.sh
+ENTRYPOINT ["/usr/local/bin/ctf-entrypoint.sh", "/app/entrypoint.sh"]
+CMD []
